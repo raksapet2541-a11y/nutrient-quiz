@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ทบทวนสารอาหารกับน้องผัก</title>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e8f6ec;--card:#fff;--ink:#1b3a30;--sub:#4f6f5f;--brand:#1f9d6b;--brandink:#fff;--sun:#ffd34d;--line:#c9e4d2;--okbg:#d6f3e2;--nobg:#ffecd2;--no:#b45309;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10231b;--card:#17342a;--ink:#e8f5ec;--sub:#a5c4b3;--brand:#3ecf90;--brandink:#0c2018;--line:#2b5342;--okbg:#1d4a37;--nobg:#4a3517;--no:#ffc27a}}
+:root[data-theme="dark"]{--bg:#10231b;--card:#17342a;--ink:#e8f5ec;--sub:#a5c4b3;--brand:#3ecf90;--brandink:#0c2018;--line:#2b5342;--okbg:#1d4a37;--nobg:#4a3517;--no:#ffc27a}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Mali","Sarabun","Noto Sans Thai",system-ui,sans-serif;font-size:18px;line-height:1.6;min-height:100vh}
+main{max-width:640px;margin:0 auto;padding:20px 16px 40px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:22px}
+h1{font-size:2rem;line-height:1.25;margin:8px 0 10px}
+h2{font-size:1.35rem;line-height:1.45;margin:14px 0 16px}
+p{margin:0 0 12px;color:var(--sub)}
+.mascot{font-size:4rem;line-height:1}
+.btn{font:inherit;font-weight:700;background:var(--brand);color:var(--brandink);border:0;border-radius:16px;padding:12px 26px;cursor:pointer;margin-top:8px}
+.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-bottom:10px}
+.bar{height:12px;background:var(--line);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;width:100%;background:var(--brand);transition:width .2s linear}
+.bar i.low{background:var(--no)}
+.opts{display:grid;gap:10px}
+.opt{font:inherit;text-align:left;background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:16px;padding:12px 16px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--okbg);border-color:var(--brand)}
+.opt.wrong{background:var(--nobg);border-color:var(--no)}
+.fb{margin-top:16px;padding:14px 16px;border-radius:16px}
+.fb.ok{background:var(--okbg)}
+.fb.no{background:var(--nobg)}
+.fb b{display:block;margin-bottom:4px}
+.fb span{color:var(--ink)}
+.stars{font-size:2.4rem;letter-spacing:4px}
+.big{font-size:2.6rem;font-weight:700;color:var(--brand)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<main><div id="app" class="card"></div></main>
+<script>
+var Q=[
+{q:"คาร์โบไฮเดรตมีหน้าที่หลักคืออะไร?",o:["ให้พลังงานแก่ร่างกาย","ช่วยให้กระดูกแข็งแรง","ช่วยให้มองเห็นในที่มืด","ช่วยให้เลือดแข็งตัว"],a:0,e:"คาร์โบไฮเดรตเป็นเหมือนน้ำมันของร่างกาย ให้พลังงานสำหรับวิ่ง เล่น และคิดเลข"},
+{q:"โปรตีนช่วยร่างกายเรื่องอะไรเป็นหลัก?",o:["ให้ความหวาน","ระบายความร้อน","สร้างและซ่อมแซมส่วนที่สึกหรอ","ทำให้ผิวมัน"],a:2,e:"โปรตีนเป็นวัสดุก่อสร้างของร่างกาย ช่วยสร้างกล้ามเนื้อและซ่อมแซมเมื่อเราเป็นแผล"},
+{q:"ไขมันมีประโยชน์ต่อร่างกายอย่างไร?",o:["ช่วยย่อยน้ำตาล","ให้พลังงานสูงและช่วยรักษาอุณหภูมิ","ช่วยสร้างฟัน","ช่วยขับเหงื่อ"],a:1,e:"ไขมันให้พลังงานมากและเป็นเหมือนเสื้อกันหนาวห่อหุ้มร่างกายให้อบอุ่น"},
+{q:"ข้าวและขนมปังเป็นแหล่งของสารอาหารชนิดใดมากที่สุด?",o:["โปรตีน","วิตามิน","น้ำ","คาร์โบไฮเดรต"],a:3,e:"ข้าว ขนมปัง เผือก และมัน เป็นอาหารกลุ่มแป้ง ซึ่งมีคาร์โบไฮเดรตมาก"},
+{q:"ไข่และเนื้อปลาเป็นแหล่งของสารอาหารชนิดใด?",o:["โปรตีน","คาร์โบไฮเดรต","เกลือแร่","วิตามินซี"],a:0,e:"ไข่ เนื้อสัตว์ นม และถั่ว เป็นแหล่งโปรตีนที่ช่วยให้ร่างกายเติบโต"},
+{q:"วิตามินมีหน้าที่อะไร?",o:["ให้พลังงานมากที่สุด","ช่วยให้ร่างกายทำงานเป็นปกติและต้านโรค","ใช้สร้างกล้ามเนื้อ","เป็นส่วนประกอบของเหงื่อเท่านั้น"],a:1,e:"วิตามินต้องการในปริมาณน้อย แต่ช่วยให้ระบบต่างๆ ในร่างกายทำงานได้ดีและป้องกันโรค"},
+{q:"ดื่มนมแล้วกระดูกและฟันแข็งแรง เพราะนมมีสารอาหารอะไร?",o:["ไขมันอิ่มตัว","คาร์โบไฮเดรต","น้ำตาล","เกลือแร่ (แคลเซียม)"],a:3,e:"แคลเซียมเป็นเกลือแร่ชนิดหนึ่ง ช่วยสร้างกระดูกและฟันให้แข็งแรง"},
+{q:"ข้อใดเป็นหน้าที่ของน้ำ?",o:["สร้างกล้ามเนื้อ","เก็บสะสมเป็นพลังงาน","ช่วยลำเลียงสารอาหารและระบายความร้อน","ให้พลังงานสูงที่สุด"],a:2,e:"น้ำช่วยพาสารอาหารไปทั่วร่างกายและช่วยระบายความร้อนผ่านเหงื่อ จึงควรดื่มให้พอทุกวัน"},
+{q:"ผักและผลไม้สดอุดมไปด้วยสารอาหารใดเป็นหลัก?",o:["วิตามินและเกลือแร่","ไขมัน","คาร์โบไฮเดรตอย่างเดียว","โปรตีนทั้งหมด"],a:0,e:"ผักผลไม้มีวิตามินและเกลือแร่หลากหลาย ช่วยให้ร่างกายแข็งแรง จึงควรกินทุกมื้อ"},
+{q:"สารอาหารชนิดใดที่ร่างกายต้องการมากที่สุดในแต่ละวัน และขาดไม่ได้เลย?",o:["ไขมัน","น้ำ","เกลือแร่","วิตามิน"],a:1,e:"ร่างกายของเรามีน้ำเป็นส่วนประกอบมากกว่าครึ่ง ถ้าขาดน้ำจะอ่อนเพลียและทำงานไม่เต็มที่"}
+];
+var app=document.getElementById("app"),i=0,score=0,t0=0,tick=null,cur=null,LIM=20000;
+var CHEER=["เยี่ยมมาก! เก่งสุดๆ ไปเลย 🎉","ถูกต้อง! สมองฟิตมาก 💪","ใช่เลย! ยอดเยี่ยม ⭐","แจ๋วมาก! ไปต่อกันเลย 🥳"];
+var TRY=["ไม่เป็นไรนะ ลองดูเฉลยกัน 🌱","เกือบแล้ว! มาเรียนรู้ไปด้วยกัน 😊","ข้อนี้ยากหน่อย เดี๋ยวจำได้แน่นอน 💚","ผิดได้ ไม่เป็นไร นี่แหละคือการทบทวน 🌟"];
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function shuffle(a){var r=a.slice(),j,k,t;for(k=r.length-1;k>0;k--){j=Math.floor(Math.random()*(k+1));t=r[k];r[k]=r[j];r[j]=t}return r}
+function start(){i=0;score=0;app.innerHTML='<div style="text-align:center"><div class="mascot">🥦</div><h1>ทบทวนสารอาหารกับน้องผัก</h1><p>มาทบทวนกัน 10 ข้อ ข้อละ 20 วินาที<br>ตอบถูกได้ 10 คะแนน ถ้าพลาดก็มีเฉลยให้เรียนรู้เสมอ</p><p>เล่นเพื่อทบทวนความรู้ ไม่ต้องแข่งกับใครนะ 😊</p><button class="btn" id="go">เริ่มเลย</button></div>';document.getElementById("go").onclick=show}
+function show(){
+ var q=Q[i];
+ cur={opts:shuffle(q.o.map(function(t,n){return{t:t,ok:n===q.a}})),done:false};
+ var h='<div class="top"><span>ข้อ '+(i+1)+' / '+Q.length+'</span><span>⭐ '+score+' คะแนน</span></div>';
+ h+='<div class="bar" aria-hidden="true"><i id="fill"></i></div><div style="text-align:right;font-size:.9rem;color:var(--sub)" id="sec" aria-live="off">เหลือ 20 วินาที</div>';
+ h+='<h2>'+esc(q.q)+'</h2><div class="opts">';
+ cur.opts.forEach(function(o,n){h+='<button class="opt" data-n="'+n+'">'+esc(o.t)+'</button>'});
+ h+='</div><div id="fb" aria-live="polite"></div>';
+ app.innerHTML=h;
+ Array.prototype.forEach.call(app.querySelectorAll(".opt"),function(b){b.onclick=function(){answer(+b.dataset.n)}});
+ t0=Date.now();clearInterval(tick);
+ tick=setInterval(function(){
+  var left=Math.max(0,LIM-(Date.now()-t0)),f=document.getElementById("fill");
+  if(!f){clearInterval(tick);return}
+  f.style.width=(left/LIM*100)+"%";f.className=left<6000?"low":"";
+  document.getElementById("sec").textContent="เหลือ "+Math.ceil(left/1000)+" วินาที";
+  if(left<=0){answer(-1)}
+ },100);
+}
+function answer(n){
+ if(cur.done)return;cur.done=true;clearInterval(tick);
+ var q=Q[i],ok=n>=0&&cur.opts[n].ok,fb=document.getElementById("fb"),msg;
+ Array.prototype.forEach.call(app.querySelectorAll(".opt"),function(b,k){
+  b.disabled=true;if(cur.opts[k].ok)b.classList.add("right");else if(k===n)b.classList.add("wrong");
+ });
+ var last=i===Q.length-1,btn='<button class="btn" id="nx">'+(last?"ดูผลของเรา":"ข้อต่อไป")+'</button>';
+ if(ok){score+=10;msg='<div class="fb ok"><b>'+CHEER[i%CHEER.length]+' +10 คะแนน</b></div>'}
+ else{
+  var lead=n<0?"หมดเวลาแล้ว ไม่เป็นไรนะ ⏰":TRY[i%TRY.length];
+  msg='<div class="fb no"><b>'+lead+'</b><span>เฉลย: '+esc(q.o[q.a])+'<br>'+esc(q.e)+'</span></div>';
+ }
+ fb.innerHTML=msg+btn;
+ var nx=document.getElementById("nx");nx.onclick=function(){i++;last?end():show()};nx.focus();
+ var s=app.querySelector(".top span:last-child");s.textContent="⭐ "+score+" คะแนน";
+}
+function end(){
+ var r=score/10,st=r>=9?3:r>=6?2:1,e,m;
+ if(r>=9){e="🏆";m="สุดยอดไปเลย! ความรู้เรื่องสารอาหารแน่นมาก"}
+ else if(r>=6){e="🌈";m="เก่งมาก! อีกนิดเดียวก็เต็มแล้ว"}
+ else{e="🌱";m="เป็นจุดเริ่มต้นที่ดี! ได้ทบทวนแล้ว ครั้งหน้าจะจำได้มากขึ้นแน่นอน"}
+ app.innerHTML='<div style="text-align:center"><div class="mascot">'+e+'</div><h1>เล่นจบแล้ว เก่งมาก!</h1><div class="stars" aria-label="'+st+' ดาว">'+"⭐".repeat(st)+'</div><div class="big">'+score+' / 100</div><p>ตอบถูก '+r+' จาก 10 ข้อ<br>'+m+'</p><button class="btn" id="again">เล่นอีกครั้ง</button></div>';
+ document.getElementById("again").onclick=start;
+}
+start();
+</script>
+</body>
+</html>
